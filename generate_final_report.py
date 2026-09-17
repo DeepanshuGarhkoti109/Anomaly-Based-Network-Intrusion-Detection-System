@@ -94,7 +94,7 @@ def generate_performance_visualization(results_df):
     plt.savefig(os.path.join(REPORT_DIR, 'model_performance_comparison.pdf'), bbox_inches='tight')
     plt.close()
     
-    print(f"✓ Performance visualization saved")
+    print(f"[OK] Performance visualization saved")
 
 def generate_summary_report(results_df):
     """Generate comprehensive summary report."""
@@ -199,7 +199,7 @@ def generate_summary_report(results_df):
         f.write("the effectiveness of machine learning for cybersecurity applications and provides a robust foundation ")
         f.write("for real-world deployment.\n")
     
-    print(f"✓ Summary report saved: {report_path}")
+    print(f"[OK] Summary report saved: {report_path}")
     return report_path
 
 def generate_technical_artifact():
@@ -283,7 +283,7 @@ def generate_technical_artifact():
         f.write("The performance difference between XGBoost and other models is statistically significant ")
         f.write("(p < 0.05) based on paired t-tests of prediction confidence scores.\n")
     
-    print(f"✓ Technical artifact saved: {artifact_path}")
+    print(f"[OK] Technical artifact saved: {artifact_path}")
     return artifact_path
 
 def main():
@@ -295,10 +295,10 @@ def main():
     # Load results
     results_df = load_model_results()
     if results_df is None:
-        print("✗ Failed to load model results")
+        print("[FAIL] Failed to load model results")
         sys.exit(1)
     
-    print(f"✓ Loaded results for {len(results_df)} models")
+    print(f"[OK] Loaded results for {len(results_df)} models")
     
     # Load best model
     best_model = load_best_model()
@@ -314,23 +314,23 @@ def main():
     print("Report Generation Complete")
     print("=" * 80)
     
-    print(f"\n📊 **Model Performance Summary:**")
+    print("\nModel Performance Summary:")
     for _, row in results_df.iterrows():
         model_name = row.iloc[0]
         accuracy = row['Accuracy']
         f1 = row['F1']
         print(f"  {model_name}: Accuracy={accuracy:.2%}, F1={f1:.2%}")
     
-    print(f"\n📈 **Best Model:** {results_df.iloc[results_df['Accuracy'].idxmax()].iloc[0]}")
-    print(f"🎯 **Best Accuracy:** {results_df['Accuracy'].max():.2%}")
+    print(f"\nBest Model: {results_df.iloc[results_df['Accuracy'].idxmax()].iloc[0]}")
+    print(f"Best Accuracy: {results_df['Accuracy'].max():.2%}")
     
-    print(f"\n📁 **Generated Files:**")
+    print("\nGenerated Files:")
     print(f"  - {summary_report}")
     print(f"  - {technical_artifact}")
     print(f"  - {REPORT_DIR}/model_performance_comparison.png")
     print(f"  - {REPORT_DIR}/model_performance_comparison.pdf")
     
-    print(f"\n✅ **All tasks completed successfully!**")
+    print("\nAll tasks completed successfully!")
     
     return 0
 

@@ -36,7 +36,7 @@ def run_notebook(notebook_path, output_dir="notebook_outputs"):
         with open(output_path, 'w', encoding='utf-8') as f:
             nbformat.write(nb, f)
         
-        print(f"✓ Notebook executed successfully: {output_path}")
+        print(f"[OK] Notebook executed successfully: {output_path}")
         
         # Also save as HTML for easy viewing
         html_exporter = HTMLExporter()
@@ -46,19 +46,19 @@ def run_notebook(notebook_path, output_dir="notebook_outputs"):
         with open(html_path, 'w', encoding='utf-8') as f:
             f.write(body)
         
-        print(f"✓ HTML export created: {html_path}")
+        print(f"[OK] HTML export created: {html_path}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Error executing notebook: {e}")
+        print(f"[FAIL] Error executing notebook: {e}")
         
         # Save the notebook with error for debugging
         error_path = os.path.join(output_dir, f"error_{os.path.basename(notebook_path)}")
         with open(error_path, 'w', encoding='utf-8') as f:
             nbformat.write(nb, f)
         
-        print(f"✗ Saved notebook with error: {error_path}")
+        print(f"[FAIL] Saved notebook with error: {error_path}")
         return False
 
 def main():
@@ -82,7 +82,7 @@ def main():
             success = run_notebook(notebook_path)
             results[notebook_path] = success
         else:
-            print(f"✗ Notebook not found: {notebook_path}")
+            print(f"[FAIL] Notebook not found: {notebook_path}")
             results[notebook_path] = False
     
     print(f"\n{'='*80}")
@@ -90,15 +90,15 @@ def main():
     print(f"{'='*80}")
     
     for notebook_path, success in results.items():
-        status = "✓ PASS" if success else "✗ FAIL"
+        status = "[OK] PASS" if success else "[FAIL] FAIL"
         print(f"{status}: {os.path.basename(notebook_path)}")
     
     # Overall status
     all_passed = all(results.values())
     if all_passed:
-        print(f"\n🎉 All notebooks executed successfully!")
+        print(f"\n All notebooks executed successfully!")
     else:
-        print(f"\n⚠️ Some notebooks failed. Check the output above for details.")
+        print(f"\n Some notebooks failed. Check the output above for details.")
     
     return 0 if all_passed else 1
 
