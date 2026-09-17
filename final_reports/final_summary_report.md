@@ -1,6 +1,6 @@
 # Final Evaluation Report: Anomaly-Based Network Intrusion Detection System
 
-**Report Generated:** 2026-09-17 14:12:10  
+**Report Generated:** 2026-09-17 14:38:47  
 **Dataset:** UNSW-NB15  
 **Total Records Evaluated:** 257,673 (175,341 train + 82,332 test)  
 
@@ -68,7 +68,7 @@ Four machine learning and neural network models were evaluated on the UNSW-NB15 
 | File | Description |
 |:---|:---|
 | [`final_summary_report.md`](./final_summary_report.md) | Comprehensive evaluation and analysis report |
-| [`technical_artifact.md`](./technical_artifact.md) | Mathematical formulation and technical details |
+| [`technical_artifact.md`](./technical_artifact.md) | Technical overview, module reference & mathematical formulation |
 | [`model_performance_comparison.png`](./model_performance_comparison.png) | High-resolution performance visualization chart |
 | [`model_performance_comparison.pdf`](./model_performance_comparison.pdf) | Vector graphics performance chart |
 | [`model_comparison_with_mlp.csv`](./model_comparison_with_mlp.csv) | Full metrics table (Classical + MLP) |

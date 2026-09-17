@@ -133,8 +133,7 @@ trainer.train_xgboost()
 │   ├── utils/              # Utility functions
 │   └── evaluation/         # Evaluation metrics and visualization
 ├── models/                  # Saved model files (.pkl)
-├── final_reports/           # Final evaluation reports, visualizations, and CSV metrics
-├── docs/                    # Technical documentation
+├── final_reports/           # Final evaluation reports, technical artifacts, visualizations, and CSV metrics
 ├── tests/                   # Automated smoke & unit tests
 ├── requirements.txt         # Python dependencies
 ├── README.md               # Project overview

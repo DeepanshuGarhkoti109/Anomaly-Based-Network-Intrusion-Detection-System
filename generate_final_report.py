@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Generate final evaluation report for the intrusion detection system.
-Consolidates all metrics, visualizations, and summary reports into final_reports/.
+Consolidates all metrics, visualizations, module technical overviews, and summary reports into final_reports/.
 """
 
 import os
@@ -190,7 +190,7 @@ def generate_summary_report(results_df):
         f.write("| File | Description |\n")
         f.write("|:---|:---|\n")
         f.write("| [`final_summary_report.md`](./final_summary_report.md) | Comprehensive evaluation and analysis report |\n")
-        f.write("| [`technical_artifact.md`](./technical_artifact.md) | Mathematical formulation and technical details |\n")
+        f.write("| [`technical_artifact.md`](./technical_artifact.md) | Technical overview, module reference & mathematical formulation |\n")
         f.write("| [`model_performance_comparison.png`](./model_performance_comparison.png) | High-resolution performance visualization chart |\n")
         f.write("| [`model_performance_comparison.pdf`](./model_performance_comparison.pdf) | Vector graphics performance chart |\n")
         f.write("| [`model_comparison_with_mlp.csv`](./model_comparison_with_mlp.csv) | Full metrics table (Classical + MLP) |\n")
@@ -204,12 +204,123 @@ def generate_summary_report(results_df):
     return report_path
 
 def generate_technical_artifact():
-    """Generate a technical artifact for review."""
+    """Generate a technical artifact and overview documentation."""
     artifact_path = os.path.join(REPORT_DIR, 'technical_artifact.md')
     
     with open(artifact_path, 'w', encoding='utf-8') as f:
-        f.write("# Technical Artifact: Intrusion Detection Model Evaluation Details\n\n")
-        f.write("## 1. Mathematical Formulation & Metrics\n\n")
+        f.write("# Technical Overview & System Architecture\n\n")
+        
+        f.write("## 1. System Architecture & End-to-End Data Flow\n\n")
+        f.write("```\n")
+        f.write("UNSW-NB15.csv / NSL-KDD.txt\n")
+        f.write("         │\n")
+        f.write("         ▼\n")
+        f.write("   DataLoader.load_raw_data()\n")
+        f.write("         │\n")
+        f.write("         ▼\n")
+        f.write("   Preprocessor.fit_transform_pipeline()\n")
+        f.write("   ├── handle_missing_values()\n")
+        f.write("   ├── encode_categoricals()\n")
+        f.write("   ├── clip_outliers()\n")
+        f.write("   └── fit_transform_scaler()\n")
+        f.write("         │\n")
+        f.write("         ▼\n")
+        f.write("   FeatureEngineer.run_all()\n")
+        f.write("   ├── ratio features\n")
+        f.write("   ├── log features\n")
+        f.write("   ├── statistical features\n")
+        f.write("   └── connection features\n")
+        f.write("         │\n")
+        f.write("         ▼\n")
+        f.write("   SelectKBest(mutual_info_classif, k=30)\n")
+        f.write("         │\n")
+        f.write("    ┌────┴────┐\n")
+        f.write("    ▼         ▼\n")
+        f.write("  Classical  Neural Network / DL\n")
+        f.write("  Models     Models\n")
+        f.write("  (LR/RF/XGB) (MLP / DL)\n")
+        f.write("    │         │\n")
+        f.write("    └────┬────┘\n")
+        f.write("         ▼\n")
+        f.write("   evaluate_model()\n")
+        f.write("   ├── accuracy, precision, recall, F1\n")
+        f.write("   ├── ROC-AUC, PR-AUC\n")
+        f.write("   └── confusion matrix\n")
+        f.write("         │\n")
+        f.write("         ▼\n")
+        f.write("   final_reports/model_comparison_with_mlp.csv\n")
+        f.write("```\n\n")
+        
+        f.write("## 2. Module Reference\n\n")
+        f.write("### `src.data.loader.DataLoader`\n")
+        f.write("| Method | Description |\n")
+        f.write("|---|---|\n")
+        f.write("| `load_raw_data()` | Loads UNSW-NB15 or NSL-KDD; generates synthetic data if files not found |\n")
+        f.write("| `load_preprocessed_data()` | Returns `(X_train, X_test, y_train, y_test)` from `data/processed/` |\n\n")
+        
+        f.write("### `src.data.preprocessor.Preprocessor`\n")
+        f.write("| Method | Description |\n")
+        f.write("|---|---|\n")
+        f.write("| `handle_missing_values(df)` | Median imputation (numeric), 'Unknown' fill (categorical) |\n")
+        f.write("| `clip_outliers(df, cols, q_lo, q_hi)` | Winsorise at given quantile bounds |\n")
+        f.write("| `encode_categoricals(df, cols)` | One-hot or ordinal encoding |\n")
+        f.write("| `fit_scaler(X)` / `transform_scaler(X)` | StandardScaler (fit on train only) |\n")
+        f.write("| `fit_transform_pipeline(df)` | All steps in sequence -> returns `(X, y, feature_names)` |\n\n")
+        
+        f.write("### `src.features.engineer.FeatureEngineer`\n")
+        f.write("| Method | New Features |\n")
+        f.write("|---|---|\n")
+        f.write("| `add_ratio_features(df)` | bytes_ratio, packets_ratio, load_ratio, bytes_per_pkt |\n")
+        f.write("| `add_log_features(df)` | `*_log` columns via `log1p` |\n")
+        f.write("| `add_statistical_features(df)` | jitter_sum, jitter_ratio, ttl_diff, win_diff |\n")
+        f.write("| `add_connection_features(df)` | ct_ratio, ct_ltm_ratio |\n")
+        f.write("| `run_all(df)` | All of the above |\n\n")
+        
+        f.write("### `src.evaluation.metrics`\n")
+        f.write("| Function | Description |\n")
+        f.write("|---|---|\n")
+        f.write("| `evaluate_model(y_true, y_pred, y_prob)` | Returns dict with accuracy, precision, recall, F1, ROC-AUC, PR-AUC |\n")
+        f.write("| `plot_roc_curve(models_probs)` | Multi-model ROC comparison |\n")
+        f.write("| `plot_confusion_matrix(y_true, y_pred)` | Annotated heatmap with FPR/FNR |\n")
+        f.write("| `plot_training_history(history)` | Loss + accuracy learning curves |\n\n")
+        
+        f.write("### `src.utils.visualization`\n")
+        f.write("| Function | Description |\n")
+        f.write("|---|---|\n")
+        f.write("| `plot_class_distribution(y)` | Bar + pie chart of label counts |\n")
+        f.write("| `plot_correlation_matrix(df)` | Lower-triangle heatmap, reports high-corr pairs |\n")
+        f.write("| `plot_feature_importance(importances)` | Horizontal bar chart |\n")
+        f.write("| `plot_reconstruction_error(...)` | Autoencoder threshold visualisation |\n\n")
+        
+        f.write("### `src.utils.helpers`\n")
+        f.write("| Function | Description |\n")
+        f.write("|---|---|\n")
+        f.write("| `set_random_seed(seed)` | Sets Python, NumPy, TF, and PyTorch seeds |\n")
+        f.write("| `timer(label)` | Context manager that prints elapsed time |\n")
+        f.write("| `timeit(func)` | Decorator version of timer |\n")
+        f.write("| `memory_usage(obj)` | Human-readable RAM usage |\n")
+        f.write("| `ensure_dir(path)` | `mkdir -p` wrapper |\n\n")
+        
+        f.write("### `src.models.trainer.ModelTrainer`\n")
+        f.write("| Method | Description |\n")
+        f.write("|---|---|\n")
+        f.write("| `train_logistic_regression(...)` | Trains LR, saves to `models/` |\n")
+        f.write("| `train_random_forest(...)` | Trains RF, saves to `models/` |\n")
+        f.write("| `train_xgboost(...)` | Trains XGBoost, saves to `models/` |\n")
+        f.write("| `train_all_classical(...)` | All three above, returns comparison table |\n")
+        f.write("| `best_model(metric)` | Returns `(name, model)` for top model |\n\n")
+        
+        f.write("### `src.pipeline.run_pipeline`\n")
+        f.write("```python\n")
+        f.write("run_pipeline(\n")
+        f.write("    dataset='unsw_nb15',    # or 'nsl_kdd'\n")
+        f.write("    model='all',            # or 'xgboost', 'random_forest', 'logistic_regression'\n")
+        f.write("    test_size=0.20,\n")
+        f.write("    feature_engineering=True,\n")
+        f.write(") -> pd.DataFrame           # comparison table\n")
+        f.write("```\n\n")
+        
+        f.write("## 3. Mathematical Formulation & Metrics\n\n")
         f.write("### Accuracy\n")
         f.write("$$\\text{Accuracy} = \\frac{TP + TN}{TP + TN + FP + FN}$$\n\n")
         f.write("### Precision\n")
@@ -221,7 +332,7 @@ def generate_technical_artifact():
         f.write("### ROC-AUC\n")
         f.write("$$\\text{ROC-AUC} = \\int_{0}^{1} \\text{TPR}(FPR^{-1}(t)) \\, dt$$\n\n")
         
-        f.write("## 2. Top Selected Features (Mutual Information Ranking)\n\n")
+        f.write("## 4. Top Selected Features (Mutual Information Ranking)\n\n")
         f.write("1. **sbytes** - Source-to-destination transaction bytes\n")
         f.write("2. **dbytes** - Destination-to-source transaction bytes\n")
         f.write("3. **sload** - Source bits per second\n")
@@ -231,10 +342,7 @@ def generate_technical_artifact():
         f.write("7. **dur** - Record total duration\n")
         f.write("8. **ct_srv_src** - Connections containing same service and source address\n")
         f.write("9. **ct_dst_sport_ltm** - Connections to same destination and source port in 100 records\n")
-        f.write("10. **ct_src_dport_ltm** - Connections from same source to destination port in 100 records\n\n")
-        
-        f.write("## 3. Directory Layout\n\n")
-        f.write("All generated reports and metric tables are consolidated in `final_reports/`.\n")
+        f.write("10. **ct_src_dport_ltm** - Connections from same source to destination port in 100 records\n")
     
     print(f"[OK] Technical artifact saved: {artifact_path}")
     return artifact_path
