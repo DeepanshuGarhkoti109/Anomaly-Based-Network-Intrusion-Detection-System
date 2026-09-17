@@ -34,7 +34,7 @@ We tested multiple AI models on real network data (257,673 connection records fr
 
 ![Model Performance Comparison](final_reports/model_performance_comparison.png)
 
-> 📄 **For the full analysis, metrics breakdown, and architecture details** → [`final_reports/final_summary_report.md`](final_reports/final_summary_report.md)
+> 📄 **For full analysis and architecture details** → [`final_reports/final_summary_report.md`](final_reports/final_summary_report.md)
 
 ---
 
@@ -82,7 +82,8 @@ Network Traffic Data
 .
 ├── data/                    # Dataset info & preprocessing artifacts
 │   ├── features/                   # Feature selection artifacts (.pkl)
-│   └── processed/                  # Scaler, encoders (.pkl) — CSVs not stored in git
+│   ├── processed/                  # Scaler, encoders (.pkl) — CSVs gitignored
+│   └── raw/                        # Raw dataset CSVs (gitignored, download separately)
 ├── final_reports/           # 📊 Start here! Charts, benchmarks, executive summary
 │   ├── final_summary_report.md          # Full analysis & findings
 │   ├── technical_artifact.md            # System architecture & formulas
