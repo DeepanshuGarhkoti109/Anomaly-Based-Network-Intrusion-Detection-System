@@ -43,9 +43,7 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Large dataset files (download separately using download_dataset.py)
-data/raw/*.csv
-data/processed/*.csv
+# Large CSV files are tracked via Git LFS (see .gitattributes)
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
