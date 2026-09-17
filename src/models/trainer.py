@@ -36,7 +36,7 @@ class ModelTrainer:
     models_dir : str | None
         Directory for saved model files.  Defaults to ``<project_root>/models``.
     results_dir : str | None
-        Directory for CSV result files.  Defaults to ``<project_root>/results``.
+        Directory for CSV result files.  Defaults to ``<project_root>/final_reports``.
     random_state : int
         Global random seed.
     """
@@ -49,7 +49,7 @@ class ModelTrainer:
     ):
         root = Path(__file__).resolve().parent.parent.parent
         self.models_dir  = Path(models_dir)  if models_dir  else root / "models"
-        self.results_dir = Path(results_dir) if results_dir else root / "results"
+        self.results_dir = Path(results_dir) if results_dir else root / "final_reports"
         self.random_state = random_state
 
         self.models_dir.mkdir(parents=True, exist_ok=True)

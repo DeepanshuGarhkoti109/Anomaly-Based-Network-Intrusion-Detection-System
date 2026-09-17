@@ -376,7 +376,7 @@ project/
 │   ├── evaluation/     metrics, plots
 │   └── utils/          visualization, helpers
 ├── models/             Saved .pkl / .keras files
-├── results/            CSV comparison tables
+├── final_reports/              CSV comparison tables
 ├── tests/              smoke_test.py
 ├── docs/               Extended documentation
 ├── config.yaml         All hyperparameters in one place

@@ -132,13 +132,13 @@ trainer.train_xgboost()
 │   ├── models/             # Model definitions and training
 │   ├── utils/              # Utility functions
 │   └── evaluation/         # Evaluation metrics and visualization
-├── models/                  # Saved model files
-├── results/                 # Output results and visualizations
-├── docs/                    # Documentation
-├── tests/                   # Unit tests
+├── models/                  # Saved model files (.pkl)
+├── final_reports/           # Final evaluation reports, visualizations, and CSV metrics
+├── docs/                    # Technical documentation
+├── tests/                   # Automated smoke & unit tests
 ├── requirements.txt         # Python dependencies
-├── README.md               # This file
-└── project_decisions.md    # Project decision log
+├── README.md               # Project overview
+└── project_decisions.md    # Project decision log and technical journal
 ```
 
 ## 📈 Results
@@ -147,23 +147,24 @@ trainer.train_xgboost()
 | Model | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
 |-------|----------|-----------|--------|----------|---------|
 | **XGBoost** | **98.74%** | 0.9887 | 0.9929 | **0.9908** | 0.9994 |
+| **MLP (Neural Network)** | **98.44%** | 0.9845 | 0.9927 | **0.9886** | 0.9989 |
 | Random Forest | 97.65% | 0.9673 | 0.9992 | 0.9830 | 0.9976 |
 | Logistic Regression | 94.44% | 0.9458 | 0.9741 | 0.9597 | 0.9819 |
 
 ### **Key Findings from Completed Run**
-1. **XGBoost achieved 98.74% accuracy** - Best performing model
-2. **All models >94% accuracy** - Demonstrates effective feature engineering
-3. **High ROC-AUC scores** (>0.98) - Excellent discrimination capability
-4. **Best model saved**: `models/best_classical_model.pkl` (XGBoost)
-5. **Complete report**: `final_report/final_summary_report.md`
+1. **XGBoost achieved 98.74% accuracy** - Best performing classical model
+2. **MLP achieved 98.44% accuracy** - Strong deep learning baseline
+3. **All models >94% accuracy** - Demonstrates effective feature engineering
+4. **High ROC-AUC scores** (>0.98) - Excellent discrimination capability
+5. **Best model saved**: `models/best_classical_model.pkl` (XGBoost)
+6. **Complete report**: `final_reports/final_summary_report.md`
 
 ### **Project Completion Status** ✅
 - ✅ Dataset downloaded and verified
 - ✅ All 5 notebooks executed successfully  
-- ✅ 3 ML models trained and evaluated
-- ✅ Best model saved and validated
-- ✅ Comprehensive report generated
-- ✅ Visualizations created
+- ✅ 4 ML/DL models trained and evaluated
+- ✅ Best models saved and validated
+- ✅ Comprehensive report & charts generated in `final_reports/`
 
 *Results based on actual run completed on September 16, 2026*
 
@@ -274,9 +275,9 @@ predictions = model.predict(new_data[selected_features])
 ```
 
 ### **View Results:**
-- **Performance Report**: `final_report/final_summary_report.md`
-- **Model Comparison**: `results/classical_model_comparison.csv`
-- **Visualizations**: `final_report/model_performance_comparison.png`
+- **Performance Report**: `final_reports/final_summary_report.md`
+- **Model Comparison Table**: `final_reports/model_comparison_with_mlp.csv`
+- **Visualizations**: `final_reports/model_performance_comparison.png`
 - **Executed Notebooks**: `notebook_outputs/`
 
 ---

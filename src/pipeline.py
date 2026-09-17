@@ -70,7 +70,7 @@ def run_pipeline(
     project_root = Path(__file__).resolve().parent.parent
     output_dir   = Path(output_dir) if output_dir else project_root
     models_dir   = ensure_dir(str(output_dir / "models"))
-    results_dir  = ensure_dir(str(output_dir / "results"))
+    results_dir  = ensure_dir(str(output_dir / "final_reports"))
 
     logger.info("=== Pipeline START  dataset=%s  model=%s ===", dataset, model)
 

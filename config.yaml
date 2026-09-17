@@ -135,7 +135,7 @@ evaluation:
 # Output Configuration
 output:
   models_dir: "models/"
-  results_dir: "results/"
+  results_dir: "final_reports/"
   logs_dir: "logs/"
   
   save_format:
