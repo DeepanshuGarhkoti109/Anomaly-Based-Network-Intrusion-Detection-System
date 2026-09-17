@@ -51,6 +51,10 @@ data/processed/*.csv
 .ipynb_checkpoints/
 */.ipynb_checkpoints/*
 
+# Agent-generated duplicate/temp directories
+notebook_outputs/
+src/
+
 # Logs & temporary files
 *.log
 *.tmp
