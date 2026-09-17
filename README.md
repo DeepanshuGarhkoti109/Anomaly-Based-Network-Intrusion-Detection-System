@@ -5,168 +5,152 @@
 ![Python](https://img.shields.io/badge/Python-3.8%2B-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-**An AI-powered security system that automatically detects cyber attacks on computer networks by learning what "normal" network traffic looks like and flagging anything suspicious.**
+An AI-powered cybersecurity project that learns the normal behavior of network traffic and flags suspicious activity as anomalies. It is designed for intrusion detection, attack identification, and research benchmarking using real-world traffic patterns.
 
 ---
 
-## What Is This Project?
+## Project Overview
 
-Think of this like a **smart security guard for your network**. Traditional security systems work like a checklist—they only catch attacks they've seen before (like a guard who only stops people on a "wanted" list). This system is different: it **learns the normal patterns of your network traffic** and alerts you when something unusual happens—even if it's a brand new type of attack that nobody has ever seen before.
+This system learns what healthy network traffic looks like and automatically detects abnormal flows that may indicate attacks such as reconnaissance, exploits, denial of service, or malware-related behavior. Instead of depending only on static signatures, the system uses machine learning to find novel patterns.
 
-### Why Does This Matter?
-- **Catches unknown threats**: Detects zero-day attacks and novel intrusions that signature-based systems miss
-- **High accuracy**: 98.74% accuracy in identifying malicious vs. normal traffic
-- **Ready to use**: Comes with pre-trained models you can deploy immediately
-- **Transparent**: Full code, notebooks, and reports so you can understand and customize everything
+### Key Highlights
+
+- Zero-day and unknown intrusion detection capability
+- High-performing ML and deep learning models
+- Built on UNSW-NB15 network traffic data
+- Pretrained model files included for direct use
+- Full reports and notebook workflow included
 
 ---
 
-## Model Comparison: How Well Does It Work?
+## Model Performance
 
-We tested multiple AI models on real network data (257,673 connection records from the UNSW-NB15 dataset). Here's how they performed:
+The project compares multiple models on 257,673 network records and reports the best results for production use.
 
-| Model | What It Is | Accuracy | F1-Score | Best For |
-|:---|:---|:---:|:---:|:---|
-| **XGBoost** ⭐ | Gradient boosting (ensemble of decision trees) | **98.74%** | **99.08%** | **Best overall — production ready** |
-| **MLP (Neural Network)** | Multi-layer perceptron deep learning | 98.44% | 98.86% | Complex pattern recognition |
-| **Random Forest** | Ensemble of many decision trees | 97.65% | 98.30% | Interpretable, robust baseline |
-| **Logistic Regression** | Linear statistical model | 94.44% | 95.97% | Fast, simple, explainable |
+| Model                |  Accuracy  |  F1-Score  |
+| :------------------- | :--------: | :--------: |
+| **XGBoost**          | **98.74%** | **99.08%** |
+| MLP (Neural Network) |   98.44%   |   98.86%   |
+| Random Forest        |   97.65%   |   98.30%   |
+| Logistic Regression  |   94.44%   |   95.97%   |
+
+### Result Screenshot
 
 ![Model Performance Comparison](final_reports/model_performance_comparison.png)
 
-> 📄 **For full analysis and architecture details** → [`final_reports/final_summary_report.md`](final_reports/final_summary_report.md)
-
 ---
 
-## How It Works (In Simple Terms)
+## How It Works
 
-```
+```text
 Network Traffic Data
-        │
-        ▼
-┌───────────────────┐
-│  CLEAN & PREP     │  → Remove errors, fill missing values, standardize formats
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│  EXTRACT FEATURES │  → Calculate meaningful signals (ratios, statistics, patterns)
-└─────────┬─────────┘
-          │
-          ▼
-┌───────────────────┐
-│  SELECT BEST      │  → Keep only the 30 most informative features (mutual information)
-│  FEATURES         │
-└─────────┬─────────┘
-          │
-     ┌────┴────┐
-     ▼         ▼
-┌─────────┐ ┌─────────┐
-│ Classical │ │ Neural  │  ← Two approaches, both trained on the same data
-│   ML    │ │ Network │
-└────┬────┘ └────┬────┘
-     │           │
-     └─────┬─────┘
-           ▼
-    ┌─────────────┐
-    │  EVALUATE   │  → Compare accuracy, precision, recall, F1-score, ROC-AUC
-    │  & REPORT   │
-    └─────────────┘
+        |
+        v
+[Data Cleaning & Preprocessing]
+        |
+        v
+[Feature Extraction & Feature Selection]
+        |
+        v
+[Machine Learning / Neural Network Training]
+        |
+        v
+[Evaluation & Model Comparison]
+        |
+        v
+[Anomaly / Attack Detection]
 ```
+
+The pipeline includes data cleaning, feature engineering, model training, validation, and benchmarking using accuracy, precision, recall, F1-score, and ROC-AUC metrics.
 
 ---
 
-## What's In This Repository?
+## Repository Structure
 
-```
+```text
 .
-├── data/                    # Dataset info & preprocessing artifacts
-│   ├── features/                   # Feature selection artifacts (.pkl)
-│   ├── processed/                  # Scaler, encoders (.pkl) — CSVs gitignored
-│   └── raw/                        # Raw dataset CSVs (gitignored, download separately)
-├── final_reports/           # 📊 Start here! Charts, benchmarks, executive summary
-│   ├── final_summary_report.md          # Full analysis & findings
-│   ├── technical_artifact.md            # System architecture & formulas
-│   ├── model_performance_comparison.png # Performance charts (rendered above)
-│   ├── model_performance_comparison.pdf # High-res vector charts
-│   ├── model_comparison_with_mlp.csv    # All model metrics table
-│   └── classical_model_comparison.csv   # Classical ML metrics
-├── models/                  # 🎯 Pre-trained models (ready to use)
-│   ├── best_classical_model.pkl    # XGBoost — top performer
-│   └── mlp_sklearn_model.pkl       # Neural network alternative
-├── notebooks/               # 📓 Step-by-step Jupyter notebooks (with outputs)
+├── data/
+│   ├── features/
+│   ├── processed/
+│   └── raw/
+├── final_reports/
+│   ├── final_summary_report.md
+│   ├── technical_artifact.md
+│   ├── model_performance_comparison.png
+│   ├── model_performance_comparison.pdf
+│   ├── model_comparison_with_mlp.csv
+│   └── classical_model_comparison.csv
+├── models/
+│   ├── best_classical_model.pkl
+│   └── mlp_sklearn_model.pkl
+├── notebooks/
 │   ├── 01_data_exploration.ipynb
 │   ├── 02_preprocessing.ipynb
 │   ├── 03_feature_engineering.ipynb
 │   ├── 04_ml_models.ipynb
 │   └── 05_dl_models.ipynb
-└── requirements.txt         # Python dependencies
+├── requirements.txt
+├── README.md
+└── LICENSE
 ```
 
 ---
 
-## Quick Start (3 Steps)
+## Quick Start
 
-### 1. Install
+### 1. Install dependencies
+
 ```bash
 git clone https://github.com/DeepanshuGarhkoti109/Anomaly-Based-Network-Intrusion-Detection-System.git
 cd Anomaly-Based-Network-Intrusion-Detection-System
 python -m venv venv
-venv\Scripts\activate          # Windows
-# source venv/bin/activate     # Linux/macOS
+venv\Scripts\activate      # Windows
+# source venv/bin/activate # Linux/macOS
 pip install -r requirements.txt
 ```
 
-### 2. Try the Pre-trained Model (No Training Needed)
+### 2. Load the pretrained model
+
 ```python
 import joblib
-import pandas as pd
 
-# Load the best model (XGBoost) + preprocessing tools
 model = joblib.load('models/best_classical_model.pkl')
 scaler = joblib.load('data/processed/scaler.pkl')
 selected_features = joblib.load('data/features/selected_features.pkl')
-
-# Predict on your network flow data
-# predictions = model.predict(your_data[selected_features])
 ```
 
-### 3. Explore the Notebooks
+### 3. Explore notebooks
+
 ```bash
 jupyter notebook notebooks/01_data_exploration.ipynb
 ```
-All notebooks are pre-executed with outputs saved — browse them directly on GitHub or open in Jupyter.
 
 ---
 
-## Detailed Reports
+## Reports
 
-| Report | What's Inside |
-|:---|:---|
-| [`final_summary_report.md`](final_reports/final_summary_report.md) | Executive summary, full metrics, dataset details, findings & conclusions |
-| [`technical_artifact.md`](final_reports/technical_artifact.md) | System architecture, pipeline formulas, module reference, design decisions |
-| [`model_comparison_with_mlp.csv`](final_reports/model_comparison_with_mlp.csv) | Raw benchmark numbers for all models (easy to import/copy) |
-| [`model_performance_comparison.pdf`](final_reports/model_performance_comparison.pdf) | High-resolution vector charts for presentations & papers |
-
-> 💡 **Tip**: Start with `final_summary_report.md` for the full story, or jump straight to the notebooks to see the code in action.
+- [final_summary_report.md](final_reports/final_summary_report.md)
+- [technical_artifact.md](final_reports/technical_artifact.md)
+- [model_comparison_with_mlp.csv](final_reports/model_comparison_with_mlp.csv)
+- [model_performance_comparison.pdf](final_reports/model_performance_comparison.pdf)
 
 ---
 
-## Who Is This For?
+## Use Cases
 
-- **Security teams** wanting to add ML-based anomaly detection
-- **Researchers** studying network intrusion detection
-- **Students** learning applied ML for cybersecurity
-- **Engineers** building production NIDS pipelines
+- Network security monitoring
+- Intrusion detection research
+- Cybersecurity education and training
+- AI-driven anomaly classification workflows
 
 ---
 
 ## License
 
-MIT License — free to use, modify, and distribute.
+MIT License. This project is open to use, modification, and distribution.
 
 ---
 
 ## Citation
 
-If you use this work in research, please cite the UNSW-NB15 dataset and this repository.
+If you use this project for research or academic work, please cite the UNSW-NB15 dataset and the repository documentation as appropriate.
